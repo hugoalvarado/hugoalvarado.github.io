@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href="http://gmpg.org/xfn/11" rel="profile">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+		<!-- Enable responsiveness on mobile devices-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+		<title>Hugo Alvarado</title>
+
+		<!-- CSS -->
+		<link href="//fonts.googleapis.com/" rel="dns-prefetch">
+		<link href="//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic|Abril+Fatface|PT+Sans:400,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet">
+
+		<link rel="stylesheet" href="http://hugoalvarado.github.io/theme/css/poole.css" />
+		<link rel="stylesheet" href="http://hugoalvarado.github.io/theme/css/hyde.css" />
+		<link rel="stylesheet" href="http://hugoalvarado.github.io/theme/css/syntax.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+		<!-- RSS -->
+		<link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+	</head>
+
+	<body class="theme-base-0d">
+<div class="sidebar">
+	<div class="container sidebar-sticky">
+		<div class="sidebar-about">
+
+			<h1>
+				<a href="/">
+					<img class="profile-picture" src="http://hugoalvarado.github.io/images/">
+					Hugo Alvarado
+				</a>
+			</h1>
+			<p class="lead"></p>
+			<p class="lead"> </p>
+			<p></p>
+		</div>
+		<nav class="sidebar-nav">
+					<a class="sidebar-nav-item" href="https://twitter.com/_hugoalvarado">
+						<i class="fa fa-Twitter"></i>
+					</a>
+					<a class="sidebar-nav-item" href="https://github.com/hugoalvarado">
+						<i class="fa fa-Github"></i>
+					</a>
+					<a class="sidebar-nav-item" href="https://cr.linkedin.com/in/hugoalvarado">
+						<i class="fa fa-Linkedin"></i>
+					</a>
+			<a class="sidebar-nav-item" href="">
+				<i class="fa fa-feed"></i>
+			</a>
+		</nav>
+	</div>
+</div>		<div class="content container">
+<div class="post">
+	<h1 class="post-title">How to overcome parse query.count() TIME limit</h1>
+	<span class="post-date">Sat 17 October 2015</span>
+	<p>Parse.com has some sensible (for them) limits on queries to ensure services run smoothly on their end.</p>
+<p>One of these limits is the number of count() calls that can be made per minute. Every app has limit of 160 request/per minute. This makes sense for user facing apps, but for cloud jobs, I don’t care if it takes a while for a task to complete, I just want start it and know that it will get done.</p>
+<p>A cloud job can trigger this error, and will show up like this:
+[Error]: The number of count operations in progress has reached its limit.</p>
+<p>A simple way I found to throttle my cloud job was to make a request to http://www.slowapi.com:</p>
+<div class="highlight"><pre><span></span><span class="c1">//http://www.slowapi.com/ - A website that mocks a slow API</span>
+<span class="nx">Parse</span><span class="p">.</span><span class="nx">Cloud</span><span class="p">.</span><span class="nx">httpRequest</span><span class="p">(</span>
+  <span class="p">{</span><span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;slowapi.herokuapp.com/delay/&#39;</span><span class="o">+</span><span class="nx">wait</span><span class="p">}).</span><span class="nx">always</span><span class="p">(</span><span class="kd">function</span><span class="p">(){});</span>
+</pre></div>
+
+
+<p>Where wait is the time in seconds slowapi.com will delay the response.</p>
+<p>Using that request we can create a simple promise function that we can use to delay pieces of cloud jobs:</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">netWait</span><span class="p">(</span><span class="nx">wait</span><span class="p">)</span>
+<span class="p">{</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="s1">&#39;undefined&#39;</span> <span class="o">==</span> <span class="k">typeof</span> <span class="nx">wait</span><span class="p">)</span>
+        <span class="nx">wait</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="kd">var</span> <span class="nx">promise</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Parse</span><span class="p">.</span><span class="nb">Promise</span><span class="p">();</span>
+
+  <span class="c1">//http://www.slowapi.com/ - A website that mocks a slow API</span>
+  <span class="nx">Parse</span><span class="p">.</span><span class="nx">Cloud</span><span class="p">.</span><span class="nx">httpRequest</span><span class="p">({</span><span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;slowapi.herokuapp.com/delay/&#39;</span><span class="o">+</span><span class="nx">wait</span><span class="p">}).</span><span class="nx">always</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+      <span class="k">return</span> <span class="nx">promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">();</span>
+  <span class="p">});</span>
+
+  <span class="k">return</span> <span class="nx">promise</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+		</div>
+	</body>
+</html>
