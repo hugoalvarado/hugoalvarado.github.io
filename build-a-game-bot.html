@@ -8,7 +8,7 @@
 		<!-- Enable responsiveness on mobile devices-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-		<title>Hugo Alvarado - Authors</title>
+		<title>Hugo Alvarado</title>
 
 		<!-- CSS -->
 		<link href="//fonts.googleapis.com/" rel="dns-prefetch">
@@ -65,10 +65,25 @@
 		</nav>
 	</div>
 </div>		<div class="content container">
-    <h1>Authors on Hugo Alvarado</h1>
-
-    <ul>        <li><a href="./author/hugo.html">Hugo</a> (5)</li>
-    </ul>
+<div class="post">
+	<h1 class="post-title">Quick Comments on Sirajology's "Build a Game Bot" Youtube video</h1>
+	<span class="post-date">Sat 15 October 2016</span>
+	<h1>Quick Comments on Sirajology's "Build a Game Bot" Youtube video</h1>
+<p><a href="https://www.youtube.com/channel/UCWN3xxRkmTPmbKwht9FuE5A">Sirajology</a> has a series of videos explaining complex data science concepts in an energetic, funny, quick and to the point fashion.</p>
+<p>One of <a href="https://youtu.be/3vxk91K1PiI?t=886">them</a> does a quick tour and introduction of the "CartPole" game from <a href="https://gym.openai.com">OpenAi Gym</a>.  OpenAi Gym is "a toolkit for developing and comparing reinforcement learning algorithms". These are some tips that could help newcomers to the gym CartPole demo.</p>
+<ol>
+<li>The openai enviroment is the world where the game runs and all the agent knows.</li>
+<li>The agent receives an action, performs that action and returns a list with the new state of the world.</li>
+<li>There are 2 actions we can give to the CartPole game, 0 and 1 (left and right).</li>
+<li>The cart pole initial position and pole alignment are somewhat random. Some of the initial positions can be seen by importing my <a href="https://gist.github.com/hugoalvarado/c9f0f27bf619f4bafac840fac5c52d1c">gist</a> and running: run_test_env('CartPole-v0', perform_action=False, exit_on_done=False) </li>
+</ol>
+<p>References
+<a href="https://www.youtube.com/watch?v=3vxk91K1PiI">Sirajology</a>
+<a href="http://kvfrans.com/simple-algoritms-for-solving-cartpole/">http://kvfrans.com/</a></p>
+<blockquote>
+<p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
+</blockquote>
+</div>
 		</div>
 	</body>
 </html>
