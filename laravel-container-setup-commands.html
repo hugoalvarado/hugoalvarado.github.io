@@ -65,22 +65,75 @@
 		</nav>
 	</div>
 </div>		<div class="content container">
-<h1>Archives for Hugo Alvarado</h1>
+<div class="post">
+	<h1 class="post-title">Laravel Homestead Container Commands</h1>
+	<span class="post-date">Thu 20 October 2016</span>
+	<p>These are some of the commands and steps I regularly use when starting a homestead Docker container based Lumen or Laravel project. </p>
+<ul>
+<li>To install the dependencies you defined in composer.json, use the following command:  </li>
+</ul>
+<div class="highlight"><pre><span></span>composer install
+</pre></div>
 
-<dl>
-    <dt>Thu 20 October 2016</dt>
-    <dd><a href="./laravel-container-setup-commands.html">Laravel Homestead Container Commands</a></dd>
-    <dt>Sat 15 October 2016</dt>
-    <dd><a href="./build-a-game-bot.html">Quick Comments on Sirajology's "Build a Game Bot" Youtube video</a></dd>
-    <dt>Fri 07 October 2016</dt>
-    <dd><a href="./pelican-site-github.html">Setting up a Pelican site with GitHub</a></dd>
-    <dt>Sat 17 October 2015</dt>
-    <dd><a href="./overcome-parse-js-query-time.html">How to overcome parse query.count() TIME limit</a></dd>
-    <dt>Wed 01 April 2009</dt>
-    <dd><a href="./eclipse-ide-workspace-in-use.html">Eclipse IDE, Workspace in use error</a></dd>
-    <dt>Thu 28 August 2008</dt>
-    <dd><a href="./edmund-gold.html">Edmund's gold</a></dd>
-</dl>
+
+<ul>
+<li>
+<p>Setup the .env file. The details will depend on each project but the db connection authentication will be set here. </p>
+</li>
+<li>
+<p>Create tables defined in the database/seeds folder  </p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span>php artisan migrate
+</pre></div>
+
+
+<ul>
+<li>Add initial seed data defined in the database/seeds folder  </li>
+</ul>
+<div class="highlight"><pre><span></span>php artisan db:seed
+</pre></div>
+
+
+<ul>
+<li>Reload seed data  </li>
+</ul>
+<div class="highlight"><pre><span></span>php artisan migrate:refresh --seed
+</pre></div>
+
+
+<ul>
+<li>Run phpunit for single test  </li>
+</ul>
+<div class="highlight"><pre><span></span>phpunit --filter TEST_METHOD TEST_CLASS_NAME PATH/FILE_NAME.php
+</pre></div>
+
+
+<ul>
+<li>ie:</li>
+</ul>
+<div class="highlight"><pre><span></span>phpunit --filter testBackgroundCheck MemberProfileTest tests/MemberProfileTest.php
+</pre></div>
+
+
+<ul>
+<li>Changes to the homestead setup will require this command before starting the container:  </li>
+</ul>
+<div class="highlight"><pre><span></span>vagrant provision
+</pre></div>
+
+
+<ul>
+<li>THen to bing up the container and then enter via ssh:  </li>
+</ul>
+<div class="highlight"><pre><span></span>vagrant up
+vagrant ssh
+</pre></div>
+
+
+<p>References:<br />
+https://laravel.com/docs/5.0/migrations#database-seeding  </p>
+</div>
 		</div>
 	</body>
 </html>

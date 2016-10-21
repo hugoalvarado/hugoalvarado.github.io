@@ -68,8 +68,7 @@
 <div class="post">
 	<h1 class="post-title">Setting up a Pelican site with GitHub</h1>
 	<span class="post-date">Fri 07 October 2016</span>
-	<h1>Setting up a Pelican site with GitHub</h1>
-<p>My initial hugoalvarado.github.io page used the standard github pages system and themes but I recently went with the Pelican Site Generator.</p>
+	<p>My initial hugoalvarado.github.io page used the standard github pages system and themes but I recently went with the Pelican Site Generator.</p>
 <p>My first step was to follow the <a href="http://docs.getpelican.com/en/3.6.3/quickstart.html">quickstart</a> on the getpelican site. It was easy to follow and after setting up my pelican site locally I uploaded the whole site source to my hugoalvarado.github.io git repository. </p>
 <p>I opened a new tab to checked my shiny new Pelican and Python powered site! But... this of course did not work. Pelican stores the generated site in the output folder and github pages expects the site html source to live directly in the repository, sort of like the www or htdocs directories in other webservers.</p>
 <p>There are a couple ways to resolve this. The pelican docs mention the ghp-import package but I went with the git submodule.</p>
