@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href="http://gmpg.org/xfn/11" rel="profile">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+		<!-- Enable responsiveness on mobile devices-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+		<title>Hugo Alvarado</title>
+
+		<!-- CSS -->
+		<link href="//fonts.googleapis.com/" rel="dns-prefetch">
+		<link href="//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic|Abril+Fatface|PT+Sans:400,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet">
+
+		<link rel="stylesheet" href="./theme/css/poole.css" />
+		<link rel="stylesheet" href="./theme/css/hyde.css" />
+		<link rel="stylesheet" href="./theme/css/syntax.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+		<!-- RSS -->
+		<link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+	<script type="text/javascript">
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ 			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ 			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-85097254-1', 'auto');
+			ga('send', 'pageview');
+	</script>
+	</head>
+
+	<body class="theme-base-0d">
+<div class="sidebar">
+	<div class="container sidebar-sticky">
+		<div class="sidebar-about">
+
+			<h1>
+				<a href="/">
+					<img class="profile-picture" src="./images/avatar.jpg">
+					Hugo Alvarado
+				</a>
+			</h1>
+			<p class="lead"></p>
+			<p class="lead">Hello! I'm Hugo Alvarado, working as Software Engineer, living deep in the jungle of data and pythons. </p>
+			<p></p>
+		</div>
+		<nav class="sidebar-nav">
+					<a class="sidebar-nav-item" href="mailto:hugo102@gmail.com">
+						<i class="fa fa-envelope"></i>
+					</a>
+					<a class="sidebar-nav-item" href="https://twitter.com/_hugoalvarado">
+						<i class="fa fa-twitter"></i>
+					</a>
+					<a class="sidebar-nav-item" href="https://github.com/hugoalvarado">
+						<i class="fa fa-github"></i>
+					</a>
+					<a class="sidebar-nav-item" href="https://cr.linkedin.com/in/hugoalvarado">
+						<i class="fa fa-linkedin"></i>
+					</a>
+			<a class="sidebar-nav-item" href="">
+				<i class="fa fa-feed"></i>
+			</a>
+		</nav>
+	</div>
+</div>		<div class="content container">
+<div class="post">
+	<h1 class="post-title">Backend-Shmackend</h1>
+	<span class="post-date">Thu 10 November 2016</span>
+	<p>I was working with another developer on a new project, a single page application using a rest api. We were looking for something to help us start writing the backend quickly and decided to try Parse.com. It handled and hid many of the complexities for us like security, managing servers, tokens, resetting login passwords and provided a nice dashboard to view our data and manage the account. </p>
+<p>Initially things seemed fine. Creating api endpoints was easy, we wrote javascript functions on the server side (Nodejs) and then we could call those functions from the client:</p>
+<p>Server (cloudCode):</p>
+<div class="highlight"><pre><span></span>Parse.Cloud.define(&quot;updateMember&quot;, function(request, response) { ... });
+</pre></div>
+
+
+<p>Client:</p>
+<div class="highlight"><pre><span></span>Parse.Cloud.run(&#39;updateMember&#39;, params, { ... });
+</pre></div>
+
+
+<p>Easy. Almost too easy. The problems came as the requirements and complexity grew, our backend cloudCode was big file of js code. I started moving some common functions to modules but there were other issues with Parse. Debugging and reading the logfiles was terrible. </p>
+<p>Parse only kept a limited number of logged lines (yes lines, not log files, but lines, dozens of them...dozens!), which were only available in their dashboard, and some times the logs would simply stop updating. The final nail in the coffin was the announcement that Parse was shutting down. </p>
+<p>We had two options, run our own parse server or rewrite the backend. We chose the latter.</p>
+<p>We decided to go with Lumen, a lighter version of Laravel, with great documentation, PHP, and good community. It's worked well for us, though there are new concepts that I've needed to brush up on (which is great). Lumen sets things up so its easier to follow good practices like dependency injection and testing. It works with phpunit out of the box, and I recently setup acceptance testing with Codeception and Phantomjs.</p>
+<p>The fronted did not change much. I wrote a small client class to make the api requests to the new Lumen backend, so instead of having:</p>
+<div class="highlight"><pre><span></span>Parse.Cloud.run(&#39;updateMember&#39;, params, { ... });  
+</pre></div>
+
+
+<p>we now use</p>
+<div class="highlight"><pre><span></span>self.client.run(&#39;members/&#39;+userid, &#39;put&#39;, params, { ... });
+</pre></div>
+
+
+<p>Our new api tries to use the proper https verbs for each requirement: get for fetching data, put for updating, post for creating data.
+For the most part the same data is returned, and the calls use the same parameters, all that changed is the api calling methods.</p>
+<p>We used Knockoutjs for our SPA, so I had to create the new client object, pass the api url and security token:</p>
+<div class="highlight"><pre><span></span>var viewModel = function() {
+self.client = client(&#39;www.our-lumen-site.com&#39;+&#39;/api/&#39;, login_token);
+}
+
+
+And this is the client,mostly a wrapper of the jquery ajax request:
+
+(function(root) {
+
+root.client = function(host, token)
+{
+    var self = this;
+
+    self.host = stripTrailingSlash(host);    
+    self.token = token;
+
+
+    var run = function(api, verb, data, callback ){
+
+        data = data || {};
+        callback = callback || {};        
+
+        var token = self.token;
+
+        api = api.trim();
+
+        //remove first /, if it exists
+        var re = /^\//;
+        api.replace(re, &quot;&quot;);
+
+        //remove last /, if it exists
+        var re = /\/$/;
+        api.replace(re, &quot;&quot;);
+
+        verb = verb.trim();
+
+        return $.ajax({
+            url: self.host+&#39;/&#39;+api,
+            type: verb || &#39;GET&#39;,
+            //dataType: &#39;json&#39;,
+            headers: {&#39;Authorization&#39;: &#39;Bearer &#39;+token},
+            data: data,
+            success: callback.success? callback.success : function(){log(&#39;success&#39;)},
+            error: callback.error? callback.error :  function(){log(&#39;error&#39;)}
+        });
+    }
+
+    var ret = {
+        version: &#39;0.1&#39;,
+        run: run
+    };
+
+    return ret;
+};
+
+}(this));
+</pre></div>
+
+
+<p>The client class exposes the run function and the version only, all the other details like the host and url are hidden.</p>
+<p>All thing considered this turned out well, it allowed us to have greater control and learn and apply new tools. Our next future rewrite is using components for the frontend with React.</p>
+</div>
+		</div>
+	</body>
+</html>

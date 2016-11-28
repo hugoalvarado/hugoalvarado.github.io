@@ -8,7 +8,7 @@
 		<!-- Enable responsiveness on mobile devices-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-		<title>Hugo Alvarado - Tags</title>
+		<title>Hugo Alvarado</title>
 
 		<!-- CSS -->
 		<link href="//fonts.googleapis.com/" rel="dns-prefetch">
@@ -65,22 +65,17 @@
 		</nav>
 	</div>
 </div>		<div class="content container">
-    <h1>Tags for Hugo Alvarado</h1>        <li><a href="./tag/alter.html">alter</a> (1)</li>
-        <li><a href="./tag/backend.html">backend</a> (1)</li>
-        <li><a href="./tag/bookmarks.html">Bookmarks</a> (2)</li>
-        <li><a href="./tag/chrome.html">Chrome</a> (2)</li>
-        <li><a href="./tag/data-analysis.html">Data Analysis</a> (2)</li>
-        <li><a href="./tag/eclipse-ide.html">eclipse ide</a> (1)</li>
-        <li><a href="./tag/homestead.html">Homestead</a> (1)</li>
-        <li><a href="./tag/laravel.html">Laravel</a> (1)</li>
-        <li><a href="./tag/lumen.html">lumen</a> (1)</li>
-        <li><a href="./tag/mysql.html">mysql</a> (1)</li>
-        <li><a href="./tag/openai.html">openai</a> (1)</li>
-        <li><a href="./tag/parsecom.html">parse.com</a> (1)</li>
-        <li><a href="./tag/parsejs.html">parse.js</a> (2)</li>
-        <li><a href="./tag/php.html">php</a> (1)</li>
-        <li><a href="./tag/python.html">Python</a> (2)</li>
-        <li><a href="./tag/startup.html">startup</a> (2)</li>
+<div class="post">
+	<h1 class="post-title">Mysql Alter Unexpected  Magic</h1>
+	<span class="post-date">Sun 27 November 2016</span>
+	<p>I once worked on a pre-existing product (POS) that uses a MySQL db on the customer location/store. We did not initially specify the character set for the db, so it used the default from the OS, but on newer versions we started using UTF8. When updating the databases to use the UTF8 charset the initial developer used an alter statement, something like alter table modify <column name> <type> CHARACTER SET utf8 COLLATE utf8_general_ci. </p>
+<p>This updated the table column, and set the new charset. All was well.. or so it seemed...</p>
+<p>We did not notice that the alter + modify actually dropped some of the structure details like column default values or comments, this lead to data issues down the line when new rows were not being created with the default values we expected, causing problems in numerous scripts. </p>
+<p>I was tasked to research this problem. We of course did not know what was causing it at the moment or when the default was being (magically) lost, only that some tables did not have the correct structure. And this default issue did not happen on all databases, since new installs are created with the new structure from the get-go.</p>
+<p>I took a while (several days) of studying the update process and testing to finally narrow down the problem to a few lines of code. The fix was trivial but the bug was hidden away for a long time and was likely the cause for many other issues. This could have been adverted long before causing problems if more thorough testing was done, first by the developer then by qa. </p>
+<p>As a side note, always read the fine print: http://dev.mysql.com/doc/refman/5.7/en/alter-table.html
+"When you use CHANGE or MODIFY, column_definition must include the data type and all attributes that should apply to the new column, other than index attributes such as PRIMARY KEY or UNIQUE. Attributes present in the original definition but not specified for the new definition are not carried forward"</p>
+</div>
 		</div>
 	</body>
 </html>

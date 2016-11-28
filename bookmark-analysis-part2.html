@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href="http://gmpg.org/xfn/11" rel="profile">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+		<!-- Enable responsiveness on mobile devices-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+		<title>Hugo Alvarado</title>
+
+		<!-- CSS -->
+		<link href="//fonts.googleapis.com/" rel="dns-prefetch">
+		<link href="//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic|Abril+Fatface|PT+Sans:400,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet">
+
+		<link rel="stylesheet" href="./theme/css/poole.css" />
+		<link rel="stylesheet" href="./theme/css/hyde.css" />
+		<link rel="stylesheet" href="./theme/css/syntax.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+		<!-- RSS -->
+		<link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+	<script type="text/javascript">
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ 			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ 			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-85097254-1', 'auto');
+			ga('send', 'pageview');
+	</script>
+	</head>
+
+	<body class="theme-base-0d">
+<div class="sidebar">
+	<div class="container sidebar-sticky">
+		<div class="sidebar-about">
+
+			<h1>
+				<a href="/">
+					<img class="profile-picture" src="./images/avatar.jpg">
+					Hugo Alvarado
+				</a>
+			</h1>
+			<p class="lead"></p>
+			<p class="lead">Hello! I'm Hugo Alvarado, working as Software Engineer, living deep in the jungle of data and pythons. </p>
+			<p></p>
+		</div>
+		<nav class="sidebar-nav">
+					<a class="sidebar-nav-item" href="mailto:hugo102@gmail.com">
+						<i class="fa fa-envelope"></i>
+					</a>
+					<a class="sidebar-nav-item" href="https://twitter.com/_hugoalvarado">
+						<i class="fa fa-twitter"></i>
+					</a>
+					<a class="sidebar-nav-item" href="https://github.com/hugoalvarado">
+						<i class="fa fa-github"></i>
+					</a>
+					<a class="sidebar-nav-item" href="https://cr.linkedin.com/in/hugoalvarado">
+						<i class="fa fa-linkedin"></i>
+					</a>
+			<a class="sidebar-nav-item" href="">
+				<i class="fa fa-feed"></i>
+			</a>
+		</nav>
+	</div>
+</div>		<div class="content container">
+<div class="post">
+	<h1 class="post-title">Google Chrome Bookmark Analysis Part 2</h1>
+	<span class="post-date">Sat 12 November 2016</span>
+	<p>In this post I am continuing the work started <a href="https://hugoalvarado.github.io/bookmark-analysis-part1.html#bookmark-analysis-part1">here</a>. I had created an initial plot with 2 clusters but the graph looked way off, almost like a large C and the rest of plotted points scattered in the remaining space.</p>
+<p>I reviewed the initial code and apparently some of the parameters used in the example of the document term matrix (TfidfVectorizer constructor) were causing the strange plot with my data (my 400 randomly selected bookmarks). With the new code and other tweaks I now have 2 plots, a histogram or each cluster and the initial plot of each bookmark according to its generated weights created by the Kmeans algorithm.</p>
+<p><img alt="Histogram" src="/images/bookmark-analysis-part2-figure_1.png" /></p>
+<p><img alt="Plot" src="/images/bookmark-analysis-part2-figure_2.png" /></p>
+<p>The histogram and the table below seem to make the most sense, the plot is simply too busy to be able to get any insights. It's difficult to get a sense of the types of pages in each cluster but the table does show that all of my job bookmarks are in one group, cluster 4, which make sense. 
+In the histogram, cluster 4 has forbidden as a common word, and all those urls require login, so the web scraper must have gotten a 404 or some other error.</p>
+<p>Annnnd these are the actual urls in their respective groups:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Cluster</th>
+<th align="left">Url</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">http://docs.python-guide.org/en/latest/writing/gotchas/</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">http://iyask.me/</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">http://newcoder.io/tutorials/</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">http://pythonpodcast.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">http://rhodesmill.org/brandon/slides/2014-07-pyohio/clean-architecture/</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">http://stevenloria.com/python-best-practice-patterns-by-vladimir-keleshev-notes/</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">http://thecodeship.com/patterns/guide-to-python-function-decorators/</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">http://www.i-programmer.info/programming/python/3942-arrays-in-python.html?start=1</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">http://www.techbeamers.com/essential-python-tips-tricks-programmers/</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">http://www.tryton.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">https://automatetheboringstuff.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">https://docs.python.org/3.5/library/index.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">https://docs.python.org/3.5/py-modindex.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">https://github.com/donnemartin/data-science-ipython-notebooks</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">https://jeffknupp.com/blog/2014/06/18/improve-your-python-python-classes-and-object-oriented-programming/</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">https://medium.mybridge.co/19-free-ebooks-to-learn-programming-with-python-8f6f0ad4a7f8#.42dop8cvz</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">https://medium.mybridge.co/python-top-10-articles-for-the-past-month-48abfd3dd67c?gi=682e55627ca0#.ubf8p0gjp</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">https://pymotw.com/3/</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">https://realpython.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 1</td>
+<td align="left">https://www.owasp.org/index.php/Main_Page</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://blog.modulus.io/tag/express</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://blog.parse.com/announcements/validating-session-tokens-with-the-rest-api/</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://brandonrose.org/clustering</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://deployd.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://developer.yahoo.com/php/</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://gregbrockman.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://justinvincent.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://omnipay.thephpleague.com/gateways/configuring/</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://omnipay.thephpleague.com/gateways/official/</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://socket.io/blog/socket-io-cpp/</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://socket.io/docs/</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://stackoverflow.com/questions/12684765/twitter-api-returns-error-215-bad-authentication-data</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://stackoverflow.com/questions/24706226/cloud-code-on-parse-com-skipping-a-save</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://stackoverflow.com/questions/354002/mysql-select-where-not-in-table</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://superuser.com/questions/841387/using-msiexec-to-uninstall-programs</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://wellstyled.com/tools/colorscheme2/index-en.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://www.bleepingcomputer.com/forums/t/550714/manual-removal-trojanmsiled/</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">http://www.freshblurbs.com/blog/2012/05/09/async-data-loading-knockout-js-without-callback-hell.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">https://akrabat.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">https://apisyouwonthate.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">https://drive.google.com/a/rogerspos.com/?usp=folder#folders/0B9M3UsBjDCXAaUxKVVdPZlRKeUU</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">https://parse.com/questions/javascript-sdk-security</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">https://wiki.openwrt.org/doc/recipes/dumbap</td>
+</tr>
+<tr>
+<td align="left">Cluster 2</td>
+<td align="left">https://www.parse.com/docs/rest/guide/#users-security</td>
+</tr>
+<tr>
+<td align="left">Cluster 3</td>
+<td align="left">http://www.videograbby.com/#</td>
+</tr>
+<tr>
+<td align="left">Cluster 3</td>
+<td align="left">http://www.youtube-mp3.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 3</td>
+<td align="left">http://www.youtube.com/watch?v=sPNYYr4aLaM</td>
+</tr>
+<tr>
+<td align="left">Cluster 3</td>
+<td align="left">https://www.youtube.com/watch?v=3j6_y-AMtK4&amp;x-yt-ts=1422327029&amp;x-yt-cl=84838260</td>
+</tr>
+<tr>
+<td align="left">Cluster 3</td>
+<td align="left">https://www.youtube.com/watch?v=DJtef410XaM</td>
+</tr>
+<tr>
+<td align="left">Cluster 3</td>
+<td align="left">https://www.youtube.com/watch?v=hAqsM8XIr74</td>
+</tr>
+<tr>
+<td align="left">Cluster 3</td>
+<td align="left">https://www.youtube.com/watch?v=hC3VTgIPoGU</td>
+</tr>
+<tr>
+<td align="left">Cluster 3</td>
+<td align="left">https://www.youtube.com/watch?v=jqxENMKaeCU</td>
+</tr>
+<tr>
+<td align="left">Cluster 3</td>
+<td align="left">https://www.youtube.com/watch?v=nuHfVn_cfHU</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">http://blog.html.it/layoutgala/</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">http://deathtothestockphoto.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">http://will-stanton.com/how-do-i-get-my-first-job-in-data-science/</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">http://www.elpassion.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">http://www.laksman.com.ar/</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">https://sites.google.com/a/rogerspos.com/supersalon-wiki/internal-policies/internal-escalation-policy</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">https://docs.google.com/a/rogerspos.com/document/d/17zEbtJCUOJo9N7mTBFdbKh6TfuqdDm8e4CyESbjqpKo/edit</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">https://docs.google.com/a/rogerspos.com/document/d/1_gY3tOBa30Bhq4_x1w0vZucNh_y2OZZlG-Ps5avhjOs/edit</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">https://docs.google.com/a/rogerspos.com/document/d/1fgtpuT-4gEW3lLIq6pkPI0Y_myIO9f7RdT7NK4zwzXk/edit?pli=1#heading=h.2wi78zicaco5</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">https://docs.google.com/a/rogerspos.com/document/d/1jbo4q5YQi44l4A42MIj8X-nwL1O9nc2nRtKRlUlcl4Y/edit?pli=1</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">https://docs.google.com/a/rogerspos.com/document/d/1zFJiGzO71p_soybdsHXU4XYNA3PswOLY0YBM9SVvVl8/edit?pli=1</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">https://docs.google.com/a/rogerspos.com/spreadsheet/ccc?key=0Ag6HPyAjwx9idDVCX0xJaEJJUTBFYkpZSVJMeHJKaHc#gid=28</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">https://docs.google.com/a/rogerspos.com/spreadsheet/ccc?key=0AhnmmJLQXb_CdEI5NXMtN1F0OThNdm9SR0wxWUtBMFE&amp;usp=sharing#gid=0</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">https://docs.google.com/a/rogerspos.com/spreadsheet/ccc?key=0AiGJ1fggJKzwdGxtUTBGaHBBYUViMUt3ZTExYkl6TkE&amp;pli=1#gid=7</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">https://sites.google.com/a/rogerspos.com/supersalon-wiki/additional-ss-services/centralized-customer-database-ccd</td>
+</tr>
+<tr>
+<td align="left">Cluster 4</td>
+<td align="left">https://www.google.com/a/rogerspos.com/ServiceLogin?service=mail&amp;passive=true&amp;rm=false&amp;continue=http%3A%2F%2Fmail.google.com%2Fa%2Frogerspos.com%2F&amp;bsv=1k96igf4806cy&amp;scc=1&amp;ltmpl=default&amp;ltmplcache=2</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://4.bp.blogspot.com/-cvw4dpoSojs/UvjdVUmyx3I/AAAAAAAAGxw/EV5hl6RyOQU/s1600/IMG_4253.PNG</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://99-bottles-of-beer.ls-la.net/a.html#Assembler-(Intel-8086)</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://bootswatch.com/lumen/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://cisco.netacad.net/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://i.imgur.com/ANuNZej.jpg</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://img.izismile.com/img/img8/20150507/640/the_sexy_cosplay_girls_of_every_nerds_fantasy_640_21.jpg</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://ipcop.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://javaboutique.internet.com/tutorials/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://members.tripod.com/straitupfun/nesroms.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://nvie.com/posts/a-successful-git-branching-model/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://qaadmin.supersalon.com/svnup.php</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://regexr.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://rogerdudler.github.io/git-guide/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://scottchacon.com/2011/08/31/github-flow.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://tutorialblog.org/free-photoshop-brushes/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://vincentarelbundock.github.io/Rdatasets/datasets.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://workstory.com/zthomas</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://worldsfamousphotos.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.alexkras.com/19-git-tips-for-everyday-use/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.amazon.com/Objects-Patterns-Practice-Experts-Source/dp/143022925X/ref=sr_1_3?ie=UTF8&amp;s=books&amp;qid=1302134786&amp;sr=1-3</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.ar15.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.bitfalls.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.code-sucks.com/css%20layouts/faux-css-layouts/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.databaseanswers.org/data_models/index.htm</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.dmuth.org/node/1427/git-101-creating-git-repo-and-uploading-it-github</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.evan.pro/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.fontfinder.ws/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.freeroms.com/genesis.htm</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.gamefaqs.com/console/n64/game/22536.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.google.com/fonts#</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0CB8QFjAA&amp;url=http%3A%2F%2Fwww.ar15.com%2F&amp;ei=Te7lVODjJfeCsQT8jIKIAg&amp;usg=AFQjCNGzgWMiQs9U1cLodq9F_oirBP21jw&amp;sig2=Jn9JsoKrPkswA93As7IL5w&amp;bvm=bv.85970519,d.cWc</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.green-trust.org/2000/biofuel/methanedigestion3.htm</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.homedsgn.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.mccentral.org/forum/m/17339729/viewthread/13817725-minecraft-central-plugins</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.musicforprogramming.net/?one</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.onehorseshy.com/themes/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">http://www.tommie-wilhelmsen.no/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://admin.supersalon.com//login.php?old=/index.php</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://app.smartsheet.com/b/publish?EQBCT=3df0442e2a744d96b7480529fb4b8bd3</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://chrisjean.com/git-submodules-adding-using-removing-and-updating/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://d3js.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://dev.to/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://docs.google.com/a/rogerspos.com/document/d/11mviCqQw1Hq6hDPm0LZWULbKYhhD7sTynpKtNCckkQg/edit?pli=1</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://docs.google.com/a/rogerspos.com/spreadsheet/ccc?key=0Ai0Ap2_K98JmdHlBN0VRMy1QbjgzcTVwc0NuWUJORVE&amp;usp=sharing#gid=0</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://github.com/nstevens/androidguide/wiki</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://gitlab.supersalon.com/users/sign_in</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://gun.io/blog/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://hochstrasser.io/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://html5boilerplate.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://unsplash.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://www.dataquest.io/learn</td>
+</tr>
+<tr>
+<td align="left">Cluster 6</td>
+<td align="left">https://www.producthunt.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">http://blog.modulus.io/</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">http://blog.parse.com/announcements/open-sourcing-the-f8-conference-apps/</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">http://briantford.com/blog/angular-express</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">http://forum.xda-developers.com/fire-tv/themes-apps/app-root-home-launcher-replacement-app-t3118135</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">http://orizens.com/wp/topics/angular-2-communication-between-components-components-design/</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">http://profi.co/mobile-applications-development/</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">https://camjackson.net/post/9-things-every-reactjs-beginner-should-know</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">https://deliciousbrains.com/react-laravel-lumen-company-status-board/</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">https://developer.amazon.com/appsandservices/solutions/platforms/webapps</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">https://facebook.github.io/react-native/</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">https://facebook.github.io/react/docs/tutorial.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">https://github.com/prakhar1989</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">https://scotch.io/</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">https://scotch.io/bar-talk/s-o-l-i-d-the-first-five-principles-of-object-oriented-design</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">https://scotch.io/tutorials/creating-desktop-applications-with-angularjs-and-github-electron</td>
+</tr>
+<tr>
+<td align="left">Cluster 7</td>
+<td align="left">https://www.youtube.com/watch?v=-AbaV3nrw6E&amp;index=1&amp;list=PL6gx4Cwl9DGBuKtLgPR_zWYnrwv-JllpA</td>
+</tr>
+<tr>
+<td align="left">Cluster 8</td>
+<td align="left">http://imgur.com/Ik1bFHB</td>
+</tr>
+<tr>
+<td align="left">Cluster 8</td>
+<td align="left">http://imgur.com/gallery/CEDJmGR</td>
+</tr>
+<tr>
+<td align="left">Cluster 8</td>
+<td align="left">http://imgur.com/gallery/Iamyc</td>
+</tr>
+<tr>
+<td align="left">Cluster 8</td>
+<td align="left">http://imgur.com/gallery/S3McQ</td>
+</tr>
+<tr>
+<td align="left">Cluster 8</td>
+<td align="left">http://imgur.com/gallery/Z1Wy1</td>
+</tr>
+<tr>
+<td align="left">Cluster 8</td>
+<td align="left">http://imgur.com/gallery/dHCz7</td>
+</tr>
+<tr>
+<td align="left">Cluster 8</td>
+<td align="left">http://imgur.com/gallery/eKuGn</td>
+</tr>
+<tr>
+<td align="left">Cluster 8</td>
+<td align="left">http://imgur.com/gallery/fULGO</td>
+</tr>
+<tr>
+<td align="left">Cluster 8</td>
+<td align="left">http://imgur.com/gallery/kj1rU</td>
+</tr>
+<tr>
+<td align="left">Cluster 8</td>
+<td align="left">http://imgur.com/gallery/pBkpJ</td>
+</tr>
+<tr>
+<td align="left">Cluster 8</td>
+<td align="left">http://old-releases.ubuntu.com/releases/</td>
+</tr>
+<tr>
+<td align="left">Cluster 9</td>
+<td align="left">http://www.reddit.com/r/AskReddit/comments/1l31r3/what_is_a_free_pc_game_that_you_think_everyone/</td>
+</tr>
+<tr>
+<td align="left">Cluster 9</td>
+<td align="left">http://www.reddit.com/r/AskReddit/comments/x8y71/reddit_what_is_an_awesome_littleknown_website/</td>
+</tr>
+<tr>
+<td align="left">Cluster 9</td>
+<td align="left">http://www.zeroenergy.com/p_truro.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 9</td>
+<td align="left">https://www.reddit.com/r/Python/comments/57i301/what_if_flask_was_async_and_6x_faster_out_of_the/?st=iuab6zek&amp;sh=6cf06022</td>
+</tr>
+<tr>
+<td align="left">Cluster 9</td>
+<td align="left">https://www.reddit.com/r/programming/comments/57r38l/programming_books_you_might_want_to_consider/?st=iud9rwqz&amp;sh=75a0a66e</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://allrecipes.com/recipe/bbq-spice-rub/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://antrikshy.com/blog/how-i-got-started-with-programming-side-projects</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://blog.domanski.me/how-celery-fixed-pythons-gil-problem/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://blog.mapawatt.com/2010/02/21/bloom-box-an-unveiling-of-the-fuel-cell-future/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://dfg.gd/cheatsheets</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://fabien.potencier.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://flatuicolors.com/#</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://foodfreedom.wordpress.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://geoffboeing.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://gettingreal.37signals.com/toc.php</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://gonzalo123.com/2011/05/09/real-time-monitoring-php-applications-with-websockets-and-node-js/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://kootenpv.github.io/2016-09-07-ai-challenge-in-78-lines</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://ma.tt/2015/11/dance-to-calypso/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://mikehadlow.blogspot.cl/2014/06/heisenberg-developers.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://pdepend.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://regex.larsolavtorvik.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://systematicinvestor.wordpress.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://urbanhomestead.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.bodybuilding.com/fun/dark_knight_workout.htm</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.builtpractice.com/worksdomestic/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.cisco.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.decoist.com/2011-11-16/lujan-house-is-built-around-a-central-garden/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.decoist.com/2011-11-23/old-bungalow-gets-a-make-over-turns-a-trendy-home/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.fromupnorth.com/ui-inspiration-963/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.hackaday.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.jetsongreen.com/2009/07/the-sage-sets-leed-platinum-record.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.netstumbler.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.numbeo.com/cost-of-living/compare_cities.jsp?country1=Germany&amp;city1=Dusseldorf&amp;country2=Costa+Rica&amp;city2=San+Jose&amp;displayCurrency=USD</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.planet-php.net/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.reddit.com/r/reddit.com/comments/cktxy/reddit_lets_compile_a_list_of_the_best_online/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.seek.com.au/career-advice/how-to-sell-yourself-in-25-words-or-less</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.sitepoint.com/speeding-up-existing-apps-with-a-redis-cache/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.sitepoint.com/using-explain-to-write-better-mysql-queries/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.smoothwall.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.tamas.io/what-is-the-mean-stack/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.telegraph.co.uk/property/main.jhtml?xml=/property/2007/08/19/pmud119.xml</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.treehugger.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.treehugger.com/files/2007/07/tommie_wilhelmsens_kolonihagen_summerhouse.php</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://www.verdant.net/food.htm</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">http://zenpencils.com/comic/nerdist/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">https://code4startup.com/projects/ninja-learn-angularjs-firebase-by-cloning-udemy</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">https://davidwalsh.name/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">https://github.com/bmatzelle/gow/releases</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">https://github.com/jwasham/google-interview-university</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">https://laracasts.com/skills/laravel</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">https://medium.com/@landongn/12-years-later-what-i-ve-learned-about-being-a-software-engineer-d6e334d6e8a3</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">https://medium.com/the-job-to-be-done/5-tips-for-writing-a-job-story-7c9092911fc9</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">https://www.reddit.com/r/webdev/comments/3f7q3q/been_interviewing_with_a_lot_of_tech_startups_as/</td>
+</tr>
+<tr>
+<td align="left">Cluster 10</td>
+<td align="left">https://www.zenprogrammer.org/en/the10rulesofazenprogrammer.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://brazenly.blogspot.com/2014/04/r-playing-with-themes-of-graph-using.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://deluge-torrent.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://fractal.thephpleague.com/simple-example/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://getskeleton.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://iamtrask.github.io/2015/07/12/basic-python-network/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://izismile.com/2015/03/20/a_photographers_guide_to_taking_the_perfect_photo_10_pics.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://jan.kneschke.de/projects/mysql/groupwise-max</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://javascriptissexy.com/javascript-apply-call-and-bind-methods-are-essential-for-javascript-professionals/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://kvfrans.com/simple-algoritms-for-solving-cartpole/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://learnangular2.com/forms/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://martinfowler.com/articles/richardsonMaturityModel.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://mattnedrich.github.io/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://newtechnobuzzz.blogspot.in/2014/07/why-quicksort-is-better-than-mergesort.html#.V1ciSJErLs1</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://rayli.net/blog/data/top-10-data-mining-algorithms-in-plain-english/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://www.aquaponics.com/blog/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://www.color-hex.com/color/aaaaff</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://www.gervaisfortin.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://www.ghacks.net/2013/10/06/list-useful-google-chrome-command-line-switches/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://www.programmingalgorithms.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">https://css-tricks.com/css3-gradients/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">https://medium.com/technology-invention-and-more/how-to-build-a-simple-neural-network-in-9-lines-of-python-code-cc8f23647ca1#.eveyhrqbb</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">https://np.reddit.com/r/reactjs/comments/4npzq5/confused_redux_or_mobx/d46k2bl</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">https://openai.com/requests-for-research/#cartpole</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">https://scaleyourcode.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">https://spin.atomicobject.com/2014/06/24/gradient-descent-linear-regression/</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">https://www.amazon.com/60NB0650-MBAA00-Asus-X555LAB-Motherboard-i3-5020U/dp/B01IDUG9KI/ref=sr_1_6?s=pc&amp;ie=UTF8&amp;qid=1470614574&amp;sr=1-6&amp;keywords=asus+x555lab</td>
+</tr>
+<tr>
+<td align="left">Cluster 11</td>
+<td align="left">https://www.sitepoint.com/handling-collections-of-aggregate-roots/</td>
+</tr>
+<tr>
+<td align="left">Cluster 12</td>
+<td align="left">http://adamziel.com/#about_me</td>
+</tr>
+<tr>
+<td align="left">Cluster 12</td>
+<td align="left">http://flavioazevedo.com/stats-and-r-blog/2016/9/13/learning-r-on-youtube</td>
+</tr>
+<tr>
+<td align="left">Cluster 12</td>
+<td align="left">http://freespiritspheres.com/index.htm</td>
+</tr>
+<tr>
+<td align="left">Cluster 12</td>
+<td align="left">http://itl.nist.gov/div898/handbook/index.htm</td>
+</tr>
+<tr>
+<td align="left">Cluster 12</td>
+<td align="left">http://josediazgonzalez.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 12</td>
+<td align="left">http://piotrgankiewicz.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 12</td>
+<td align="left">http://www.bloodshed.net/devcpp.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 12</td>
+<td align="left">https://hypothes.is/jobs/</td>
+</tr>
+<tr>
+<td align="left">Cluster 12</td>
+<td align="left">https://remoteok.io/</td>
+</tr>
+<tr>
+<td align="left">Cluster 12</td>
+<td align="left">https://www.paypal-engineering.com/2016/04/11/statistics-for-software/#dipping_into_the_stream</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://danluu.com/programming-books/</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://inside.envato.com/the-transformative-effects-of-reading-elon-musks-reading-list/</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://izismile.com/2015/05/30/i_wish_i_could_have_a_home_like_60_pics.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://izismile.com/2016/04/23/this_is_the_way_every_woman_should_make_a_pizza_for_her_man_7_gifs.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://michaelnielsen.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://www.amazon.com/Complete-Books-Charles-Fort-Talents/dp/0486230945</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://www.artfulsoftware.com/infotree/queries.php</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://www.artfulsoftware.com/infotree/queries.php?&amp;bw=1280</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://www.cse.ucsd.edu/~dasgupta/book/index.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://www.kohala.com/start/</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://www.mathandpencil.com/capabilities</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://www.noxa.org/blog/2011/08/21/emulation-books/</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://www.obeythetestinggoat.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://www.pyvideo.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://www.watchguard.com/help/docs/webui/xtm_11/en-US/index.html#cshid=en-US/wireless/ap_wireless_signalstrength_c.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 13</td>
+<td align="left">http://www.yegor256.com/2015/04/22/favorite-software-books.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">http://blog.dwaynecrooks.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">http://cg.scs.carleton.ca/~morin/misc/sortalg/</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">http://developer.xamarin.com/guides/android/getting_started/installation/windows/manual_installation/</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">http://passwordsgenerator.net/</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">http://phantomjs.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">http://shiny.rstudio.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">http://thecrumb.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">http://www.dontpaniclabs.com/blog/post/2015/08/04/github-electron-tutorial-using-electron-boilerplate/</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">http://www.sitepoint.com/php/</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">https://github.com/amzn/web-app-starter-kit-for-fire-tv</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">https://github.com/donnemartin/interactive-coding-challenges</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">https://github.com/googlechrome/ioweb2015</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">https://github.com/indy256/Full-stack-Developer-Interview-Questions-and-Answers</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">https://github.com/joelgrus/data-science-from-scratch</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">https://github.com/pallets/flask</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">https://github.com/prakhar1989/Algorithms</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">https://github.com/wsargent/docker-cheat-sheet</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">https://ngrok.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 14</td>
+<td align="left">https://semaphoreci.com/community/tutorials/getting-started-with-composer-for-php-dependency-management</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://datascienceresume.com/advice</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://librivox.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://nborwankar.github.io/LearnDataScience/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://pivotal.io/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://quantstart.com/articles/Can-You-Still-Become-a-Quant-in-Your-Thirties</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://vortext.systems/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://www.academicearth.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://www.academicearth.org/courses/circuits-and-electronics</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://www.bluegecko.net/mysql/using-checksums-to-ensure-table-consistency-in-mysql/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://www.datasciencecentral.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://www.datascienceweekly.org/blog/18-data-scientist-interviews-volume-1-april-2014</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://www.inferentialthinking.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://www.kaggle.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://www.nagios.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://www.popsci.com/science/article/2012-04/new-research-tracks-40-year-old-prediction-world-economy-will-collapse-2030</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://www.reddit.com/r/datascience/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">http://www.skilledup.com/articles/list-data-science-bootcamps</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">https://blog.modeanalytics.com/python-data-cleaning-libraries/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">https://codility.com/programmers/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">https://fifthelephant.in/2016/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">https://github.com/open-source-society/data-science</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">https://github.com/ujjwalkarn/DataSciencePython</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">https://paul.kinlan.me/serverless-sync-in-web-apps/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">https://prasos.fi/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">https://projecteuler.net/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">https://www.dataquest.io/blog/kaggle-tutorial/?utm_source=Prod+subscribers&amp;utm_campaign=11fe1a4162-Newsletter_6_8_2016&amp;utm_medium=email&amp;utm_term=0_b2239252ea-11fe1a4162-150713397</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">https://www.drivendata.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">https://www.hellobonsai.com/rates</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">https://www.reddit.com/r/compsci/comments/3cjlzx/continually_updated_data_science_python_notebooks/</td>
+</tr>
+<tr>
+<td align="left">Cluster 15</td>
+<td align="left">https://www.udacity.com/course/machine-learning-engineer-nanodegree--nd009#</td>
+</tr>
+<tr>
+<td align="left">Cluster 16</td>
+<td align="left">https://dev.supersalon.com/tickets/</td>
+</tr>
+<tr>
+<td align="left">Cluster 16</td>
+<td align="left">https://dev.supersalon.com/trac/browser/SuperSalon/branches/5.5/scripts/serviceTimeFix.php?rev=16269</td>
+</tr>
+<tr>
+<td align="left">Cluster 16</td>
+<td align="left">https://dev.supersalon.com/trac/log/iOffice/trunk</td>
+</tr>
+<tr>
+<td align="left">Cluster 16</td>
+<td align="left">https://dev.supersalon.com/trac/ticket/16023</td>
+</tr>
+<tr>
+<td align="left">Cluster 16</td>
+<td align="left">https://dev.supersalon.com/trac/wiki/CurrentMilestones</td>
+</tr>
+<tr>
+<td align="left">Cluster 16</td>
+<td align="left">https://dev.supersalon.com/trac/wiki/EmpireDataExport</td>
+</tr>
+<tr>
+<td align="left">Cluster 16</td>
+<td align="left">https://dev.supersalon.com/trac/wiki/HowToWriteATracTicket</td>
+</tr>
+<tr>
+<td align="left">Cluster 16</td>
+<td align="left">https://dev.supersalon.com/trac/wiki/MattIndiaTrip</td>
+</tr>
+<tr>
+<td align="left">Cluster 16</td>
+<td align="left">https://dev.supersalon.com/trac/wiki/NewDevFirstSteps</td>
+</tr>
+<tr>
+<td align="left">Cluster 16</td>
+<td align="left">https://dev.supersalon.com/trac/wiki/PageRender</td>
+</tr>
+<tr>
+<td align="left">Cluster 16</td>
+<td align="left">https://dev.supersalon.com/trac/wiki/PerformanceLogging</td>
+</tr>
+<tr>
+<td align="left">Cluster 16</td>
+<td align="left">https://dev.supersalon.com/trac/wiki/Rogerstestaccountspage</td>
+</tr>
+<tr>
+<td align="left">Cluster 16</td>
+<td align="left">https://dev.supersalon.com/trac/wiki/TestSVSGiftCardProcessing</td>
+</tr>
+<tr>
+<td align="left">Cluster 16</td>
+<td align="left">https://dev.supersalon.com/trac/wiki/WorldCustomerDatabase</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://addyosmani.com/resources/essentialjsdesignpatterns/book/</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://blog.codeleak.pl/2015/06/angular2hello-world.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://dean.edwards.name/weblog/2006/03/base/</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://dfg.gd/blog/decoupling-your-code-in-laravel-using-repositiories-and-services</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://gcc.gnu.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://marcotroisi.com/healthy-oop-object-oriented-programming/</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://www.akadia.com/services/ssh_test_certificate.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://www.broculos.net/2008/03/how-to-make-simple-html-template-engine.html#.VLRjPnsfgg4</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://www.chebucto.ns.ca/~rakerman/port-table.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://www.freenas.org/index.php?option=com_frontpage&amp;Itemid=1</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://www.mozilla.org/hacking/portable-cpp.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://www.phptherightway.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://www.sphinx-doc.org/en/stable/</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://www.vecteezy.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">http://www.yolinux.com/TUTORIALS/LinuxTutorialC++STL.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">https://bosnadev.com/2015/03/07/using-repository-pattern-in-laravel-5/</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">https://gist.github.com/JeffPaine/6213790</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">https://ioffice.supersalon.com/update/</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">https://kotlinlang.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">https://matt.sh/howto-c</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">https://nikic.github.io/2011/12/27/Dont-be-STUPID-GRASP-SOLID.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">https://regisioffice.supersalon.com/update/</td>
+</tr>
+<tr>
+<td align="left">Cluster 17</td>
+<td align="left">https://www.algotech.solutions/blog/python/deleting-unused-django-media-files/</td>
+</tr>
+<tr>
+<td align="left">Cluster 18</td>
+<td align="left">http://bafflednerd.com/learn-deep-learning-online/</td>
+</tr>
+<tr>
+<td align="left">Cluster 18</td>
+<td align="left">http://codergears.com/blog/?cat=2</td>
+</tr>
+<tr>
+<td align="left">Cluster 18</td>
+<td align="left">http://neuralnetworksanddeeplearning.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 18</td>
+<td align="left">http://www.5qm.de/index-en.html#</td>
+</tr>
+<tr>
+<td align="left">Cluster 18</td>
+<td align="left">http://www.colorschemer.com/online.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 18</td>
+<td align="left">https://bitsharestalk.org/index.php/topic,18174.90.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 18</td>
+<td align="left">https://github.com/HFTrader/DeepLearningBook</td>
+</tr>
+<tr>
+<td align="left">Cluster 18</td>
+<td align="left">https://learn.modern-developer.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 18</td>
+<td align="left">https://scaleyourcode.com/interviews</td>
+</tr>
+<tr>
+<td align="left">Cluster 18</td>
+<td align="left">https://www.google.com/about/careers/students/guide-to-technical-development.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://awesome-python.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://blog.debugme.eu/front-end-developer-tools/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://css-tricks.com/absolute-positioning-inside-relative-positioning/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://developer.yahoo.com/yui/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://jasonpark.me/AlgorithmVisualizer/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://prooffreaderplus.blogspot.ca/2016/10/hugo-larochelles-neural-network-deep.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://rxmarbles.com/#scan</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://sixrevisions.com/javascript/20-fresh-javascript-data-visualization-libraries/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://sourceforge.net/project/showfiles.php?group_id=196195&amp;package_id=231831&amp;release_id=536204</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://sourceforge.net/projects/yui</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://substack.net/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://support.toshiba.com/support/modelHome?freeText=3619590</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://tutorialzine.com/2013/02/24-cool-php-libraries-you-should-know-about/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://www.a2ztechguide.com/2011/08/eclipse-ide-keyboard-shortcuts-for.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://www.codinghorror.com/blog/2007/10/a-visual-explanation-of-sql-joins.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://www.colourlovers.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://www.cplusplus.com/ref/cmath/abs.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://www.curiousgnu.com/tweetanalyzer</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://www.dynamicdrive.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://www.flotcharts.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://www.levenez.com/lang/history.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://www.michaelis-tuning.de/Nissan_Navara_D40__p_enfc.html</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://www.sgi.com/tech/stl/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://www.snorgtees.com/?utm_source=AffiliateFutures&amp;utm_medium=Banner&amp;utm_content=YourMom_300by250&amp;utm_campaign=AffiliateFutures</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://www.somacon.com/p142.php</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">http://www.stellarium.org/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">https://elements.polymer-project.org/browse</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">https://github.com/adcloud/jamal</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">https://github.com/vinta/awesome-python</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">https://gym.openai.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">https://medium.mybridge.co/top-10-javascript-articles-from-last-month-v-may-e23383d35c1c#.vreu2t9gd</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">https://snippets.webaware.com.au/howto/stop-turning-off-curlopt_ssl_verifypeer-and-fix-your-php-config/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">https://www.pinterest.com/overdriving/goddess/</td>
+</tr>
+<tr>
+<td align="left">Cluster 19</td>
+<td align="left">https://www.reddit.com/r/Python/comments/4pevuk/what_are_your_favorite_smaller_or_lesserknown/</td>
+</tr>
+<tr>
+<td align="left">Cluster 20</td>
+<td align="left">http://blitzart01.deviantart.com/gallery/</td>
+</tr>
+<tr>
+<td align="left">Cluster 20</td>
+<td align="left">http://browse.deviantart.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 20</td>
+<td align="left">http://cellar-fcp.deviantart.com/gallery/</td>
+</tr>
+<tr>
+<td align="left">Cluster 20</td>
+<td align="left">http://forums.mysql.com/read.php?98,67948,68548#msg-68548</td>
+</tr>
+<tr>
+<td align="left">Cluster 20</td>
+<td align="left">http://hackerthemes.com/bootstrap-cheatsheet#dropdown</td>
+</tr>
+<tr>
+<td align="left">Cluster 20</td>
+<td align="left">http://kidkidkidkid.deviantart.com/art/Legend-of-the-Cryptids-Ishtar-EX-343959600</td>
+</tr>
+<tr>
+<td align="left">Cluster 20</td>
+<td align="left">http://learnpythonthehardway.org/book/</td>
+</tr>
+<tr>
+<td align="left">Cluster 20</td>
+<td align="left">http://rosettacode.org/wiki/Rosetta_Code</td>
+</tr>
+<tr>
+<td align="left">Cluster 20</td>
+<td align="left">http://verehin.deviantart.com/art/Rain-Godness-Normal-383384291</td>
+</tr>
+<tr>
+<td align="left">Cluster 20</td>
+<td align="left">http://waldemar-kazak.deviantart.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 20</td>
+<td align="left">http://wallpaper.deviantart.com/</td>
+</tr>
+<tr>
+<td align="left">Cluster 20</td>
+<td align="left">http://www.infoq.com/presentations/Simple-Made-Easy</td>
+</tr>
+<tr>
+<td align="left">Cluster 20</td>
+<td align="left">http://www.joellipman.com/articles/web-development/basic-tests-for-sql-injection-vulnerabilities.html</td>
+</tr>
+</tbody>
+</table>
+<p>References:<br />
+https://github.com/hugoalvarado/chrome-bookmark-thing<br />
+http://brandonrose.org/clustering<br />
+http://blog.christianperone.com/2011/09/machine-learning-text-feature-extraction-tf-idf-part-i/<br />
+http://blog.christianperone.com/2011/10/machine-learning-text-feature-extraction-tf-idf-part-ii/<br />
+http://blog.christianperone.com/2013/09/machine-learning-cosine-similarity-for-vector-space-models-part-iii/  </p>
+</div>
+		</div>
+	</body>
+</html>
