@@ -8,7 +8,7 @@
 		<!-- Enable responsiveness on mobile devices-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-		<title>Hugo Alvarado - Tags</title>
+		<title>Hugo Alvarado</title>
 
 		<!-- CSS -->
 		<link href="//fonts.googleapis.com/" rel="dns-prefetch">
@@ -65,26 +65,46 @@
 		</nav>
 	</div>
 </div>		<div class="content container">
-    <h1>Tags for Hugo Alvarado</h1>        <li><a href="./tag/alter.html">alter</a> (1)</li>
-        <li><a href="./tag/backend.html">backend</a> (1)</li>
-        <li><a href="./tag/bookmarks.html">Bookmarks</a> (2)</li>
-        <li><a href="./tag/chrome.html">Chrome</a> (2)</li>
-        <li><a href="./tag/data-analysis.html">Data Analysis</a> (2)</li>
-        <li><a href="./tag/dhcp.html">dhcp</a> (1)</li>
-        <li><a href="./tag/docker.html">Docker</a> (1)</li>
-        <li><a href="./tag/eclipse-ide.html">eclipse ide</a> (1)</li>
-        <li><a href="./tag/homestead.html">Homestead</a> (1)</li>
-        <li><a href="./tag/laravel.html">Laravel</a> (1)</li>
-        <li><a href="./tag/lumen.html">lumen</a> (1)</li>
-        <li><a href="./tag/mysql.html">mysql</a> (1)</li>
-        <li><a href="./tag/networking.html">networking</a> (1)</li>
-        <li><a href="./tag/openai.html">openai</a> (1)</li>
-        <li><a href="./tag/parsecom.html">parse.com</a> (1)</li>
-        <li><a href="./tag/parsejs.html">parse.js</a> (2)</li>
-        <li><a href="./tag/php.html">php</a> (1)</li>
-        <li><a href="./tag/python.html">Python</a> (2)</li>
-        <li><a href="./tag/startup.html">startup</a> (2)</li>
-        <li><a href="./tag/vagrant.html">Vagrant</a> (1)</li>
+<div class="post">
+	<h1 class="post-title">Getting the IP of a running Docker Container</h1>
+	<span class="post-date">Sat 12 November 2016</span>
+	<p>I had a few Docker containers running on static ips locally, my Vagrant file had</p>
+<div class="highlight"><pre><span></span>config.vm.network &quot;private_network&quot;, ip: &quot;192.168.33.14&quot;
+config.vm.network &quot;private_network&quot;, ip: &quot;192.168.33.16&quot;
+</pre></div>
+
+
+<p>And I could access my containers with each of those ips externally and internally. After running vagrant ssh I was able to run mysql -h192.168.33.14 as needed.</p>
+<p>At one point I changed the Vagrant file to use dhcp:</p>
+<div class="highlight"><pre><span></span>config.vm.network &quot;public_network&quot;, type: &quot;dhcp&quot;
+</pre></div>
+
+
+<p>Which assigned a new ip to my vm, set to 192.168.2.116 by my local dhcp router.
+Initially this worked fine but when I needed to access services in my containers from my vm I realized the ips had changed as well.</p>
+<p>To figure out the new ips I needed to first find the id of my container:</p>
+<div class="highlight"><pre><span></span>docker ps
+</pre></div>
+
+
+<p>Which told me that the container I wanted was f10b0af660f9 .</p>
+<p>Then a quick</p>
+<div class="highlight"><pre><span></span>docker inspect f10b0af660f9 | grep -i ipaddress
+</pre></div>
+
+
+<p>returned</p>
+<div class="highlight"><pre><span></span>vagrant@ubuntu-14:~$ docker inspect f10b0af660f9 | grep -i ipaddress
+        &quot;SecondaryIPAddresses&quot;: null,
+        &quot;IPAddress&quot;: &quot;172.17.0.4&quot;,
+                &quot;IPAddress&quot;: &quot;172.17.0.4&quot;,
+</pre></div>
+
+
+<p>Wich of course meant I now had to use</p>
+<div class="highlight"><pre><span></span>mysql -h172.17.0.4
+</pre></div>
+</div>
 		</div>
 	</body>
 </html>
