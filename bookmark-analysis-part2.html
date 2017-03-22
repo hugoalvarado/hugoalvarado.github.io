@@ -67,7 +67,7 @@
 </div>		<div class="content container">
 <div class="post">
 	<h1 class="post-title">Google Chrome Bookmark Analysis Part 2</h1>
-	<span class="post-date">Sat 12 November 2016</span>
+	<span class="post-date">sáb 12 noviembre 2016</span>
 
 	<section>
 		<p id="post-share-links">
@@ -84,8 +84,8 @@
 
 	<p>In this post I am continuing the work started <a href="https://hugoalvarado.github.io/bookmark-analysis-part1.html#bookmark-analysis-part1">here</a>. I had created an initial plot with 2 clusters but the graph looked way off, almost like a large C and the rest of plotted points scattered in the remaining space.</p>
 <p>I reviewed the initial code and apparently some of the parameters used in the example of the document term matrix (TfidfVectorizer constructor) were causing the strange plot with my data (my 400 randomly selected bookmarks). With the new code and other tweaks I now have 2 plots, a histogram or each cluster and the initial plot of each bookmark according to its generated weights created by the Kmeans algorithm.</p>
-<p><img alt="Histogram" src="/images/bookmark-analysis-part2-figure_1.png" /></p>
-<p><img alt="Plot" src="/images/bookmark-analysis-part2-figure_2.png" /></p>
+<p><img alt="Histogram" src="/images/bookmark-analysis-part2-figure_1.png"></p>
+<p><img alt="Plot" src="/images/bookmark-analysis-part2-figure_2.png"></p>
 <p>The histogram and the table below seem to make the most sense, the plot is simply too busy to be able to get any insights. It's difficult to get a sense of the types of pages in each cluster but the table does show that all of my job bookmarks are in one group, cluster 4, which make sense. 
 In the histogram, cluster 4 has forbidden as a common word, and all those urls require login, so the web scraper must have gotten a 403 or some other error.</p>
 <p>Annnnd these are the actual urls in their respective groups:</p>
@@ -1699,11 +1699,11 @@ In the histogram, cluster 4 has forbidden as a common word, and all those urls r
 </tr>
 </tbody>
 </table>
-<p>References:<br />
-https://github.com/hugoalvarado/chrome-bookmark-thing<br />
-http://brandonrose.org/clustering<br />
-http://blog.christianperone.com/2011/09/machine-learning-text-feature-extraction-tf-idf-part-i/<br />
-http://blog.christianperone.com/2011/10/machine-learning-text-feature-extraction-tf-idf-part-ii/<br />
+<p>References:<br>
+https://github.com/hugoalvarado/chrome-bookmark-thing<br>
+http://brandonrose.org/clustering<br>
+http://blog.christianperone.com/2011/09/machine-learning-text-feature-extraction-tf-idf-part-i/<br>
+http://blog.christianperone.com/2011/10/machine-learning-text-feature-extraction-tf-idf-part-ii/<br>
 http://blog.christianperone.com/2013/09/machine-learning-cosine-similarity-for-vector-space-models-part-iii/  </p>
 </div>
 		</div>
